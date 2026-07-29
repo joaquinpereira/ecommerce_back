@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -16,6 +18,9 @@ Route::prefix('v1')->group(function (): void {
 
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
+
+    // Public Stripe Webhook route
+    Route::post('/webhooks/stripe', [StripeWebhookController::class, 'handleWebhook']);
 
     // Auth routes
     Route::prefix('auth')->group(function (): void {
@@ -49,5 +54,9 @@ Route::prefix('v1')->group(function (): void {
 
         // Checkout & Stripe
         Route::post('/checkout/create-payment-intent', [CheckoutController::class, 'createPaymentIntent']);
+
+        // Orders management
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
     });
 });
