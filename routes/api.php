@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StripeWebhookController;
@@ -58,5 +59,9 @@ Route::prefix('v1')->group(function (): void {
         // Orders management
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/{order}', [OrderController::class, 'show']);
+
+        // Dashboards
+        Route::get('/admin/dashboard/stats', [DashboardController::class, 'adminStats']);
+        Route::get('/supplier/dashboard/stats', [DashboardController::class, 'supplierStats']);
     });
 });
